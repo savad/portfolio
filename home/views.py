@@ -6,7 +6,8 @@ from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template import loader
 from django.template import Context
 from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt
+
+from models import Portfolio
 
 
 class HomePageView(TemplateView):
@@ -17,6 +18,7 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomePageView, self).get_context_data(**kwargs)
+        context["user"] = Portfolio.objects.get()
         return context
 
 

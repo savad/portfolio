@@ -69,15 +69,14 @@
 					<div class="fh5co-intro">
 						<div class="row">
 							<div class="col-md-8 col-md-offset-2 text-center">
-								<h1 class="fh5co-intro-lead animate-1 to-animate">Savad K.P.</h1>
-								<h2 class="fh5co-intro-sub animate-2 to-animate">A Python geek and Senior web Developer <br/>Currently working at
-                                    <a href="http://sparksupport.com" target="_blank">Sparksupport Infotech</a></h2>
+								<h1 class="fh5co-intro-lead animate-1 to-animate">{{ user.first_name }} {{ user.last_name }}</h1>
+								<h2 class="fh5co-intro-sub animate-2 to-animate">{{ user.about_me }}</h2>
 								<p class="fh5co-social text-center" id="fh5co-intro-social">
-									<a title="Facebook" target="_blank" href="https://facebook.com/kpsavad" class="to-animate"><i class="fa fa-facebook fa-make-circle"></i></a>
-									<a title="Twitter" target="_blank" href="https://twitter.com/m_savadkp" class="to-animate"><i class="fa fa-twitter fa-make-circle"></i></a>
-									<a title="Linkedin" target="_blank" href="https://www.linkedin.com/in/savadkp" class="to-animate"><i class="fa fa-linkedin fa-make-circle"></i></a>
-									<a title="StackOverflow" target="_blank" href="https://stackoverflow.com/users/3477792/savad-kp" class="to-animate"><i class="fa fa-stack-overflow fa-make-circle"></i></a>
-									<a title="Github" target="_blank" href="https://github.com/savad" class="to-animate"><i class="fa fa-github fa-make-circle"></i></a>
+									<a title="Facebook" target="_blank" href="{{ user.facebook }}" class="to-animate"><i class="fa fa-facebook fa-make-circle"></i></a>
+									<a title="Twitter" target="_blank" href="{{ user.twitter }}" class="to-animate"><i class="fa fa-twitter fa-make-circle"></i></a>
+									<a title="Linkedin" target="_blank" href="{{ user.linked_in }}" class="to-animate"><i class="fa fa-linkedin fa-make-circle"></i></a>
+									<a title="StackOverflow" target="_blank" href="{{ user.stack_overflow }}" class="to-animate"><i class="fa fa-stack-overflow fa-make-circle"></i></a>
+									<a title="Github" target="_blank" href="{{ user.github }}" class="to-animate"><i class="fa fa-github fa-make-circle"></i></a>
 								</p>
 							</div>
 						</div>
@@ -95,23 +94,15 @@
 					<div class="col-md-8 col-md-push-1">
 						<div class="row">
 							<div class="col-md-6 to-animate">
-								<p><b>CAREER OBJECTIVE:</b> To be a part of a pioneering and responsive team, to ensure my hand to hand growth
-along with the organization and thereby proving to be an asset to the organization.</p>
+								<p><b>CAREER OBJECTIVE : </b> {{ user.career_objective }}</p>
 
-								<p><b>EMPLOYMENT PROFILE :</b> 2.8 year experience in Python Django/Flask framework and Jquery.<br/>
-                                Current: Sparksupport Infotech Pvt. Ltd ​Infopark Cochin, Kerala<br/>
-                                Past: Sayone Technologies Pvt. Ltd ​Cochin, Kerala</p>
+								<p><b>EMPLOYMENT PROFILE : </b> {{ user.employment_profile|linebreaks }}</p>
 							</div>
 							<div class="col-md-6 to-animate">
-								<p><b>ACADEMIC RECORD : </b> Completed B.Tech Computer Science and Engineering at Kannur University. ( Vimal Jyothi Engineering Collage )</p>
+								<p><b>ACADEMIC RECORD : </b> {{ user.academic_record }}</p>
 								<p><b>PERSONAL SKILLS : </b>
                                     <ul>
-                                        <li>Willingness to learn</li>
-                                        <li>Hard working, responsible and trustworthy</li>
-                                        <li>Excellent problem solving skills and a self­starter</li>
-                                        <li>Takes initiative and works independently or as part of a group</li>
-                                        <li>Well organized and easily meets deadlines</li>
-                                        <li>Deal with people, problems and situations with honesty and respect</li>
+                                        {{ user.personal_skills|safe }}
                                     </ul>
                                 </p>
 							</div>
@@ -129,15 +120,15 @@ along with the organization and thereby proving to be an asset to the organizati
 						<div class="fh5co-section-content">
 							<div class="row">
 								<div class="col-md-4 text-center to-animate">
-									<span class="fh5co-counter js-counter" data-from="0" data-to="09" data-speed="5000" data-refresh-interval="50"></span>
+									<span class="fh5co-counter js-counter" data-from="0" data-to="{{ user.number_of_clients }}" data-speed="5000" data-refresh-interval="50"></span>
 									<span class="fh5co-counter-label">Clients Worked With</span>
 								</div>
 								<div class="col-md-4 text-center to-animate">
-									<span class="fh5co-counter js-counter" data-from="0" data-to="16" data-speed="5000" data-refresh-interval="50"></span>
+									<span class="fh5co-counter js-counter" data-from="0" data-to="{{ user.number_of_projects }}" data-speed="5000" data-refresh-interval="50"></span>
 									<span class="fh5co-counter-label">Completed Projects</span>
 								</div>
 								<div class="col-md-4 text-center to-animate">
-									<span class="fh5co-counter js-counter" data-from="0" data-to="64023" data-speed="5000" data-refresh-interval="50"></span>
+									<span class="fh5co-counter js-counter" data-from="0" data-to="{{ user.number_of_lines_of_code }}" data-speed="5000" data-refresh-interval="50"></span>
 									<span class="fh5co-counter-label">Line of Codes</span>
 								</div>
 							</div>
@@ -155,48 +146,50 @@ along with the organization and thereby proving to be an asset to the organizati
 					</div>
 					<div class="col-md-8 col-md-push-1">
 						<div class="row">
+                            {% for project in user.get_projects.all %}
 							<div class="col-md-6 col-sm-6 col-xs-6 col-xxs-12 fh5co-project to-animate">
-								<a href="{% static 'images/fulls/tastyspots.jpg' %}" class="image-popup">
-									<div class="fh5co-overlay-text">Tastyspots</div>
+								<a href="{{ project.image.url }}" class="image-popup">
+									<div class="fh5co-overlay-text">{{ project.name }}</div>
 									<div class="fh5co-overlay"></div>
-									<img src="{% static 'images/tastyspots.jpg' %}" alt="Tastyspots" class="img-responsive">
+									<img src="{{ project.thumbnail.url }}" alt="{{ project.name }}" class="img-responsive">
 								</a>
 							</div>
-							<div class="col-md-6 col-sm-6 col-xs-6 col-xxs-12 fh5co-project to-animate">
-								<a href="{% static 'images/fulls/dallal.jpg' %}" class="image-popup">
-									<div class="fh5co-overlay-text">Dallal</div>
-									<div class="fh5co-overlay"></div>
-									<img src="{% static 'images/dallal.jpg' %}" alt="Dallal" class="img-responsive">
-								</a>
-							</div>
-							<div class="col-md-6 col-sm-6 col-xs-6 col-xxs-12 fh5co-project to-animate">
-								<a href="{% static 'images/fulls/goshop7.jpg' %}" class="image-popup">
-									<div class="fh5co-overlay-text">Shop7</div>
-									<div class="fh5co-overlay"></div>
-									<img src="{% static 'images/goshop7.jpg' %}" alt="Shop7" class="img-responsive">
-								</a>
-							</div>
-							<div class="col-md-6 col-sm-6 col-xs-6 col-xxs-12 fh5co-project to-animate">
-								<a href="{% static 'images/fulls/myvinotype.jpg' %}" class="image-popup">
-									<div class="fh5co-overlay-text">MyVinotype</div>
-									<div class="fh5co-overlay"></div>
-									<img src="{% static 'images/myvinotype.jpg' %}" alt="MyVinotype" class="img-responsive">
-								</a>
-							</div>
-							<div class="col-md-6 col-sm-6 col-xs-6 col-xxs-12 fh5co-project to-animate">
-								<a href="{% static 'images/fulls/provision.jpg' %}" class="image-popup">
-									<div class="fh5co-overlay-text">Pro-vision</div>
-									<div class="fh5co-overlay"></div>
-									<img src="{% static 'images/provision.jpg' %}" alt="Pro-vision" class="img-responsive">
-								</a>
-							</div>
-							<div class="col-md-6 col-sm-6 col-xs-6 col-xxs-12 fh5co-project to-animate">
-								<a href="{% static 'images/fulls/swagene.jpg' %}" class="image-popup">
-									<div class="fh5co-overlay-text">Swagene</div>
-									<div class="fh5co-overlay"></div>
-									<img src="{% static 'images/swagene.jpg' %}" alt="Swagene" class="img-responsive">
-								</a>
-							</div>
+                            {% endfor %}
+{#							<div class="col-md-6 col-sm-6 col-xs-6 col-xxs-12 fh5co-project to-animate">#}
+{#								<a href="{% static 'images/fulls/dallal.jpg' %}" class="image-popup">#}
+{#									<div class="fh5co-overlay-text">Dallal</div>#}
+{#									<div class="fh5co-overlay"></div>#}
+{#									<img src="{% static 'images/dallal.jpg' %}" alt="Dallal" class="img-responsive">#}
+{#								</a>#}
+{#							</div>#}
+{#							<div class="col-md-6 col-sm-6 col-xs-6 col-xxs-12 fh5co-project to-animate">#}
+{#								<a href="{% static 'images/fulls/goshop7.jpg' %}" class="image-popup">#}
+{#									<div class="fh5co-overlay-text">Shop7</div>#}
+{#									<div class="fh5co-overlay"></div>#}
+{#									<img src="{% static 'images/goshop7.jpg' %}" alt="Shop7" class="img-responsive">#}
+{#								</a>#}
+{#							</div>#}
+{#							<div class="col-md-6 col-sm-6 col-xs-6 col-xxs-12 fh5co-project to-animate">#}
+{#								<a href="{% static 'images/fulls/myvinotype.jpg' %}" class="image-popup">#}
+{#									<div class="fh5co-overlay-text">MyVinotype</div>#}
+{#									<div class="fh5co-overlay"></div>#}
+{#									<img src="{% static 'images/myvinotype.jpg' %}" alt="MyVinotype" class="img-responsive">#}
+{#								</a>#}
+{#							</div>#}
+{#							<div class="col-md-6 col-sm-6 col-xs-6 col-xxs-12 fh5co-project to-animate">#}
+{#								<a href="{% static 'images/fulls/provision.jpg' %}" class="image-popup">#}
+{#									<div class="fh5co-overlay-text">Pro-vision</div>#}
+{#									<div class="fh5co-overlay"></div>#}
+{#									<img src="{% static 'images/provision.jpg' %}" alt="Pro-vision" class="img-responsive">#}
+{#								</a>#}
+{#							</div>#}
+{#							<div class="col-md-6 col-sm-6 col-xs-6 col-xxs-12 fh5co-project to-animate">#}
+{#								<a href="{% static 'images/fulls/swagene.jpg' %}" class="image-popup">#}
+{#									<div class="fh5co-overlay-text">Swagene</div>#}
+{#									<div class="fh5co-overlay"></div>#}
+{#									<img src="{% static 'images/swagene.jpg' %}" alt="Swagene" class="img-responsive">#}
+{#								</a>#}
+{#							</div>#}
 							
 						</div>
 					</div>
@@ -213,8 +206,10 @@ along with the organization and thereby proving to be an asset to the organizati
 							<div class="row">
 								<div class="col-md-9 col-md-offset-1 fh5co-testimony to-animate">
 									<blockquote>
-										<p class="text-center quote">&ldquo;Muhammed Savad is very detailed-oriented and produced great results for the company. &rdquo; <cite class="author">&mdash; Premsai <small>CTO, Sparksupport Infotech</small></cite></p>
-									</blockquote>
+                                        {% for quote in user.get_quotes.all %}
+										<p class="text-center quote">&ldquo;{{ quote.text }} &rdquo; <cite class="author">&mdash; {{ quote.name }} <small>{{ quote.designation }}</small></cite></p>
+									    {% endfor %}
+                                    </blockquote>
 								</div>
 							</div>
 						</div>
@@ -233,73 +228,23 @@ along with the organization and thereby proving to be an asset to the organizati
 						<div class="row">
 							<div class="col-md-12">
 								<div class="fh5co-accordion-wrap">
+                                    {% for tech in user.get_technical_expertise.all %}
 									<div class="fh5co-accordion to-animate">
 										<div class="fh5co-accordion-head">
 											<a href="#" class="fh5co-accordion-toggle js-fh5co-accordion-toggle">Show More</a>
-											<h3><i class="icon-clapperboard"></i>Programming languages</h3>
+											<h3><i class="icon-clapperboard"></i>{{ tech.title }}</h3>
 										</div>
 										<div class="fh5co-accordion-body active">
-											<p><ul><li>Python</li><li>Java Basics</li><li>C basics</li><li>C++ basics</li></ul></p>
+											<p><ul>
+                                                {% for tech_item in tech.items.all %}
+                                                <li>{{ tech_item.name }}</li>
+                                                {% endfor %}
+                                                </ul>
+                                            </p>
 										</div>	
 									</div>
+                                    {% endfor %}
 									<!-- END .fh5co-accordion -->
-
-									<div class="fh5co-accordion to-animate">
-										<div class="fh5co-accordion-head">
-											<a href="#" class="fh5co-accordion-toggle js-fh5co-accordion-toggle">Show More</a>
-											<h3><i class="icon-hand"></i>Web Technologies</h3>
-										</div>
-										<div class="fh5co-accordion-body">
-											<p><ul><li>Django</li><li>Flask</li><li>Javascript</li><li>JQuery</li><li>AJAX</li></ul></p>
-										</div>	
-									</div>
-									<!-- END .fh5co-accordion -->
-									
-									<div class="fh5co-accordion to-animate">
-										<div class="fh5co-accordion-head">
-											<a href="#" class="fh5co-accordion-toggle js-fh5co-accordion-toggle">Show More</a>
-											<h3><i class="icon-laptop"></i>Frameworks</h3>
-										</div>
-										<div class="fh5co-accordion-body">
-											<p><ul><li>Django</li><li>Flask</li></ul></p>
-										</div>	
-									</div>
-									<!-- END .fh5co-accordion -->
-
-									<div class="fh5co-accordion to-animate">
-										<div class="fh5co-accordion-head">
-											<a href="#" class="fh5co-accordion-toggle js-fh5co-accordion-toggle">Show More</a>
-											<h3><i class="icon-shopping-cart"></i>IDE</h3>
-										</div>
-										<div class="fh5co-accordion-body">
-											<p><ul><li>PyCharm 3.4</li><li>Netbeans 6.7</li></ul></p>
-										</div>	
-									</div>
-									<!-- END .fh5co-accordion -->
-
-									<div class="fh5co-accordion to-animate">
-										<div class="fh5co-accordion-head">
-											<a href="#" class="fh5co-accordion-toggle js-fh5co-accordion-toggle">Show More</a>
-											<h3><i class="icon-mobile"></i>Database</h3>
-										</div>
-										<div class="fh5co-accordion-body">
-											<p><ul><li>MySQL</li><li>PostgreSQL</li><li>Mongo</li></ul></p>
-										</div>	
-									</div>
-									<!-- END .fh5co-accordion -->
-
-									<div class="fh5co-accordion to-animate">
-										<div class="fh5co-accordion-head">
-											<a href="#" class="fh5co-accordion-toggle js-fh5co-accordion-toggle">Show More</a>
-											<h3><i class="icon-man"></i>Operating System</h3>
-										</div>
-										<div class="fh5co-accordion-body">
-											<p><ul><li>Ubuntu</li><li>Linux Mint</li><li>Windows 8</li><li>Windows 7</li></ul></p>
-										</div>	
-									</div>
-									<!-- END .fh5co-accordion -->
-
-
 								</div>
 							</div>
 						</div>
@@ -323,11 +268,11 @@ along with the organization and thereby proving to be an asset to the organizati
 									<ul class="fh5co-contact">
 										<li class="fh5co-contact-address to-animate">
 											<i class="icon-home"></i>
-											KP Vesala Chattukappara, KL 670592, India
+											{{ user.address }}, {{ user.city }} - {{ user.pin }}, {{ user.country }}
 										</li>
-										<li class="to-animate"><i class="icon-phone"></i> +91-980-9242303</li>
-										<li class="to-animate"><i class="icon-email"></i>savad@engineer.com</li>
-										<li class="to-animate"><i class="icon-globe"></i> <a href="." target="_blank">savad.com</a></li>
+										<li class="to-animate"><i class="icon-phone"></i> {{ user.phone_number }}</li>
+										<li class="to-animate"><i class="icon-email"></i>{{ user.email }}</li>
+										<li class="to-animate"><i class="icon-globe"></i> <a href="{{ user.website }}" target="_blank">{{ user.website }}</a></li>
 									</ul>
 								</div>
 
@@ -374,7 +319,7 @@ along with the organization and thereby proving to be an asset to the organizati
 			<div class="container" id="footer-animate">
 				<div class="row row-padded">
 					<div class="col-md-8 col-md-push-4">
-						<p class="to-animate">&copy; 2016 Savad. All Rights Reserved. Designed: <a href="." target="_blank">Savad</a></p>
+						<p class="to-animate">&copy; 2016 Savad. All Rights Reserved. Designed: <a href="{{ user.website }}" target="_blank">Savad</a></p>
 					</div>
 				</div>
 			</div>

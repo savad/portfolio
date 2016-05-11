@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home',
+    'solo',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -75,20 +76,20 @@ WSGI_APPLICATION = 'portfolio.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 import dj_database_url
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config()
+# DATABASES = {}
+# DATABASES['default'] = dj_database_url.config()
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'NAME': dj_database_url.config(),
 #     }
 # }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 
 # Password validation
@@ -137,8 +138,13 @@ STATICFILES_DIRS = [
 
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_PASSWORD = '********************'
-EMAIL_HOST_USER = '**************@gmail.com'
-DEFAULT_FROM_EMAIL = 'Admin <admin@gmail.com>'
+EMAIL_HOST_PASSWORD = '************'
+EMAIL_HOST_USER = '***********@gmail.com'
+DEFAULT_FROM_EMAIL = 'Savad KP <*****@gmail.com>'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+AUTH_USER_MODEL = 'home.Portfolio'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

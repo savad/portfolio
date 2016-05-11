@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url, patterns
 from django.contrib import admin
+from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf.urls.static import static
 
 from home import views
 
@@ -23,6 +25,6 @@ urlpatterns = [
     url(r'^savad-admin/', admin.site.urls),
     url(r'^$', views.HomePageView.as_view(), name='home'),
     url(r'^send-message$', views.SendMessage.as_view(), name='send_message'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()
